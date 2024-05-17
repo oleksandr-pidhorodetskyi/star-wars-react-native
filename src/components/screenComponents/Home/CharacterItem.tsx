@@ -43,8 +43,12 @@ const CharactersItem: React.FC<CharactersItemProps> = ({
       <TouchableOpacity onPress={handleLikePress}>
         {isLiked ? <HeartFilled /> : <HeartOutlined />}
       </TouchableOpacity>
-      <Text style={styles.count}>{data.name}</Text>
-      <Text style={styles.title}>{data.gender}</Text>
+      <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+        {data.name}
+      </Text>
+      <Text style={styles.gender} numberOfLines={1} ellipsizeMode="tail">
+        {data.gender}
+      </Text>
     </View>
   );
 };
@@ -53,18 +57,21 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: horizontalScale(10),
     justifyContent: 'space-between',
+    columnGap: horizontalScale(10),
     paddingHorizontal: horizontalScale(15),
     paddingVertical: verticalScale(15),
   },
-  title: {
-    fontSize: moderateScale(16),
+  name: {
     color: '#000',
+    fontSize: moderateScale(16),
+    maxWidth: '50%',
+    textAlign: 'left',
   },
-  count: {
-    color: '#000',
+  gender: {
     fontSize: moderateScale(16),
+    color: '#000',
+    maxWidth: '35%',
   },
 });
 
