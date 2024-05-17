@@ -5,12 +5,8 @@ import {
   moderateScale,
   verticalScale,
 } from '../../../utils/metrics.ts';
+import {FansCardType} from '../../../store/characters/types';
 
-export type FansCardType = {
-  id: string;
-  title: string;
-  count: number;
-};
 interface FansCardProps {
   data: FansCardType;
   customStyles?: StyleProp<ViewStyle>;
@@ -26,7 +22,6 @@ const FansCard: React.FC<FansCardProps> = ({data, customStyles = {}}) => {
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     justifyContent: 'space-between',
     backgroundColor: '#fff',
     paddingHorizontal: horizontalScale(15),

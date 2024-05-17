@@ -1,26 +1,22 @@
 import React from 'react';
-import {Animated, StyleSheet} from 'react-native';
-import FansCard, {FansCardType} from './FansCard.tsx';
+import {ScrollView, StyleSheet} from 'react-native';
+import FansCard from './FansCard.tsx';
 import {horizontalScale, verticalScale} from '../../../utils/metrics.ts';
-import ScrollView = Animated.ScrollView;
+import {FansCardType} from '../../../store/characters/types';
 
-const DATA: FansCardType[] = [
-  {id: 'Female', title: 'Female Fans', count: 0},
-  {id: 'Male', title: 'Male Fans', count: 0},
-  {id: 'Others', title: 'Others', count: 0},
-];
-
-const FansContainer = () => {
+const FansContainer = ({countedData}: {countedData: FansCardType[]}) => {
   return (
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       style={styles.container}>
-      {DATA.map((fans, index) => (
+      {countedData.map((fans, index) => (
         <FansCard
           key={fans.id}
           data={fans}
-          customStyles={index !== DATA.length - 1 ? styles.itemMargin : {}}
+          customStyles={
+            index !== countedData.length - 1 ? styles.itemMargin : {}
+          }
         />
       ))}
     </ScrollView>

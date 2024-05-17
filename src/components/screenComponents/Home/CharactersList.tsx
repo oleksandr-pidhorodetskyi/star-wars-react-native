@@ -1,37 +1,52 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import CharactersItem from './CharacterItem.tsx';
-import {FansCardType} from './FansCard.tsx';
 import Pagination from '../../basic/Pagination.tsx';
+import {useAppDispatch, useAppSelector} from '../../../hooks/useRedux.ts';
+import {getCharactersThunk} from '../../../store/characters/thunks.ts';
+import {
+  selectCharacters,
+  selectLikedCharacters,
+  selectMaxCharacters,
+} from '../../../store/characters/selectors.ts';
+import {CHARACTERS_PER_PAGE} from '../../../constants';
 
-const DATA: FansCardType[] = [
-  {id: 'Female', title: 'Female Fans', count: 0},
-  {id: 'Male', title: 'Male Fans', count: 0},
-  {id: 'Others', title: 'Others', count: 0},
-];
 const CharactersList = () => {
-  const [startItem, setStartItem] = useState<number>(0);
-  const [maxItems, setMaxItems] = useState<number>(0);
+  const dispatch = useAppDispatch();
+  const characters = useAppSelector(selectCharacters);
+  const maxCharacters = useAppSelector(selectMaxCharacters);
+  const likedCharacters = useAppSelector(selectLikedCharacters);
+
+  const [currentPage, setCurrentPage] = useState<number>(0);
+
+  const startItem = currentPage * CHARACTERS_PER_PAGE + 1;
+  const endItem = startItem + characters.length - 1;
 
   const handleNextPress = () => {
-    console.log('next');
+    setCurrentPage(prev => prev + 1);
   };
   const handlePreviousPress = () => {
-    console.log('previous');
+    setCurrentPage(prev => prev - 1);
   };
+
+  useEffect(() => {
+    dispatch(getCharactersThunk({page: currentPage + 1}));
+  }, [currentPage]);
 
   return (
     <View>
       <FlatList
-        data={DATA}
+        data={characters}
         style={styles.container}
-        renderItem={({item}) => <CharactersItem data={item} />}
-        keyExtractor={item => item.id}
+        renderItem={({item}) => (
+          <CharactersItem data={item} likedCharacters={likedCharacters} />
+        )}
+        keyExtractor={(item, index) => item.name + index}
       />
       <Pagination
-        startItem={startItem}
-        endItem={DATA.length}
-        maxItems={maxItems}
+        startPageItem={startItem}
+        endPageItem={endItem}
+        maxItems={maxCharacters}
         onNextPress={handleNextPress}
         onPreviousPress={handlePreviousPress}
       />
@@ -40,9 +55,7 @@ const CharactersList = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    height: 10,
-  },
+  container: {},
 });
 
 export default CharactersList;

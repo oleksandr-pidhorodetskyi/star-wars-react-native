@@ -3,22 +3,41 @@ import {StyleSheet, Text, View} from 'react-native';
 import CustomButton from '../../basic/CustomButton.tsx';
 import {horizontalScale, moderateScale} from '../../../utils/metrics.ts';
 import FansContainer from './FansContainer.tsx';
+import {useAppDispatch, useAppSelector} from '../../../hooks/useRedux.ts';
+import {selectLikedCharacters} from '../../../store/characters/selectors.ts';
+import {clearLikedCharacters} from '../../../store/characters/slice.ts';
+import {FansCardType} from '../../../store/characters/types';
+import {parseCountGanders} from '../../../utils/parseCountGanders.ts';
 
 const Header = () => {
+  const dispatch = useAppDispatch();
+  const likedCharacters = useAppSelector(selectLikedCharacters);
+
+  const contedGenders = parseCountGanders(likedCharacters);
+
+  const countedData: FansCardType[] = [
+    {id: 'Female', title: 'Female Fans', count: contedGenders.female},
+    {id: 'Male', title: 'Male Fans', count: contedGenders.male},
+    {id: 'Others', title: 'Others', count: contedGenders.other},
+  ];
+
+  const handleClearFans = () => {
+    dispatch(clearLikedCharacters());
+  };
+
   return (
     <View>
       <View style={styles.container}>
         <Text style={styles.title}>Fans</Text>
-        <CustomButton>Clear fans</CustomButton>
+        <CustomButton onPress={handleClearFans}>Clear fans</CustomButton>
       </View>
-      <FansContainer />
+      <FansContainer countedData={countedData} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

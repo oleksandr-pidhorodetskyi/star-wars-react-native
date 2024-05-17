@@ -5,26 +5,26 @@ import ArrowRight from '../../assets/icons/arrowRight.svg';
 import {horizontalScale, verticalScale} from '../../utils/metrics.ts';
 
 interface PaginationProps {
-  startItem: number;
-  endItem: number;
+  startPageItem: number;
+  endPageItem: number;
   maxItems: number;
   onNextPress: () => void;
   onPreviousPress: () => void;
 }
 const Pagination: React.FC<PaginationProps> = ({
-  startItem,
-  endItem,
+  startPageItem,
+  endPageItem,
   maxItems,
   onNextPress,
   onPreviousPress,
 }) => {
-  const isDisabledPrevious = startItem <= 1;
-  const isDisabledNext = endItem === maxItems;
+  const isDisabledPrevious = startPageItem <= 1;
+  const isDisabledNext = endPageItem === maxItems;
 
   return (
     <View style={styles.container}>
       <Text style={styles.pagesText}>
-        {startItem} - {endItem} of {maxItems}
+        {startPageItem} - {endPageItem} of {maxItems}
       </Text>
       <TouchableOpacity
         style={isDisabledPrevious && styles.disabledBtn}

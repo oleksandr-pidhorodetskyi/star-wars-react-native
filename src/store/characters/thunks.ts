@@ -9,8 +9,7 @@ export const getCharactersThunk = createAsyncThunk(
     try {
       await dispatch(startLoading());
       const res = await starWarsApi.getCharacters(page);
-      console.log('Characters', res);
-      return {data: res?.data};
+      return {count: res?.data?.count, data: res?.data?.results};
     } catch (err) {
       if (axios.isAxiosError(err)) {
         return rejectWithValue(err.response?.data);
