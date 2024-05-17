@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {getCharactersThunk} from './thunks.ts';
+import {getCharactersThunk, getSearchCharactersThunk} from './thunks.ts';
 import {CharacterType} from './types';
 
 interface CharactersState {
@@ -45,6 +45,11 @@ export const slice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(getCharactersThunk.fulfilled, (state, {payload}) => {
+      const {data, count} = payload;
+      state.maxCharacters = count;
+      state.characters = data;
+    });
+    builder.addCase(getSearchCharactersThunk.fulfilled, (state, {payload}) => {
       const {data, count} = payload;
       state.maxCharacters = count;
       state.characters = data;
