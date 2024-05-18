@@ -11,7 +11,37 @@ import {CharacterType} from '../../../store/characters/types';
 interface CharacterInfoProps {
   data: CharacterType;
 }
+
+type characterSpecType = {
+  id: string;
+  title: string;
+  value: string;
+};
+
 const CharacterInfo: React.FC<CharacterInfoProps> = ({data}) => {
+  const characterSpec: characterSpecType[] = [
+    {
+      id: '1',
+      title: 'Birth year',
+      value: data.birth_year,
+    },
+    {
+      id: '2',
+      title: 'Gender',
+      value: data.gender,
+    },
+    {
+      id: '3',
+      title: 'Homeworld',
+      value: data.homeworld,
+    },
+    {
+      id: '4',
+      title: 'Species',
+      value: data.species.join(', '),
+    },
+  ];
+
   return (
     <View style={styles.infoContainer}>
       <View style={styles.nameContainer}>
@@ -19,22 +49,12 @@ const CharacterInfo: React.FC<CharacterInfoProps> = ({data}) => {
         <Text style={styles.name}>{data?.name}</Text>
       </View>
       <View style={styles.specContainer}>
-        <Text style={styles.specText}>
-          <Text style={styles.specTitle}>Birth year: </Text>
-          {data?.birth_year}
-        </Text>
-        <Text style={styles.specText}>
-          <Text style={styles.specTitle}>Gender: </Text>
-          {data?.gender}
-        </Text>
-        <Text style={styles.specText}>
-          <Text style={styles.specTitle}>Homeworld: </Text>
-          {data?.homeworld}
-        </Text>
-        <Text style={styles.specText}>
-          <Text style={styles.specTitle}>Species: </Text>
-          {data?.species.join(', ')}
-        </Text>
+        {characterSpec.map(spec => (
+          <Text key={spec.id} style={styles.specText}>
+            <Text style={styles.specTitle}>{spec.title}: </Text>
+            {spec.value}
+          </Text>
+        ))}
       </View>
     </View>
   );
