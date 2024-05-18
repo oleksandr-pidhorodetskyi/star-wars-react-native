@@ -6,7 +6,7 @@ import {
   verticalScale,
 } from '../../../utils/metrics.ts';
 import LikeButton from '../../basic/LikeButton.tsx';
-import {CharacterType} from '../../../store/characters/types';
+import {CharacterType} from '../../../store/characters/types.ts';
 
 interface CharacterInfoProps {
   data: CharacterType;

@@ -1,4 +1,4 @@
-import {CharacterType} from '../store/characters/types';
+import {CharacterType} from '../store/characters/types.ts';
 
 interface GenderCounts {
   male: number;

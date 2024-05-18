@@ -4,7 +4,7 @@ import {
   getOneCharacterThunk,
   getSearchCharactersThunk,
 } from './thunks.ts';
-import {CharacterType} from './types';
+import {CharacterType} from './types.ts';
 
 interface CharactersState {
   maxCharacters: number;

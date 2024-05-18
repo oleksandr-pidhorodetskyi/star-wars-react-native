@@ -5,7 +5,7 @@ import {
   moderateScale,
   verticalScale,
 } from '../../../utils/metrics.ts';
-import {FansCardType} from '../../../store/characters/types';
+import {FansCardType} from '../../../store/characters/types.ts';
 
 interface FansCardProps {
   data: FansCardType;

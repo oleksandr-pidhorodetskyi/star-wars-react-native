@@ -11,12 +11,13 @@ import {
   moderateScale,
   verticalScale,
 } from '../../../utils/metrics.ts';
-import {CharacterType} from '../../../store/characters/types';
+import {CharacterType} from '../../../store/characters/types.ts';
 import {useAppDispatch} from '../../../hooks/useRedux.ts';
 import {useNavigation} from '@react-navigation/native';
 import {getId} from '../../../utils/getId.ts';
 import {getOneCharacterThunk} from '../../../store/characters/thunks.ts';
 import LikeButton from '../../basic/LikeButton.tsx';
+import {NavigationRoutes} from '../../../navigation/types.ts';
 
 interface CharactersItemProps {
   data: CharacterType;
@@ -33,7 +34,7 @@ const CharactersItem: React.FC<CharactersItemProps> = ({
 
   const handleChoseCharacter = () => {
     dispatch(getOneCharacterThunk({id: characterId}));
-    navigation.navigate('Character');
+    navigation.navigate(NavigationRoutes.Character);
   };
 
   return (

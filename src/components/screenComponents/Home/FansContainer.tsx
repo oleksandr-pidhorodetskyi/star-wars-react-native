@@ -2,7 +2,7 @@ import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import FansCard from './FansCard.tsx';
 import {horizontalScale, verticalScale} from '../../../utils/metrics.ts';
-import {FansCardType} from '../../../store/characters/types';
+import {FansCardType} from '../../../store/characters/types.ts';
 
 const FansContainer = ({countedData}: {countedData: FansCardType[]}) => {
   return (

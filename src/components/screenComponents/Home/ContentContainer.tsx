@@ -21,7 +21,7 @@ import {
 import CharactersItem from './CharacterItem.tsx';
 import useDebounce from '../../../hooks/useDebounce.ts';
 import withLoader from '../../basic/withLoader.tsx';
-import {CharacterType} from '../../../store/characters/types';
+import {CharacterType} from '../../../store/characters/types.ts';
 
 const FlatListWithLoader = withLoader<FlatListProps<CharacterType>>(FlatList);
 

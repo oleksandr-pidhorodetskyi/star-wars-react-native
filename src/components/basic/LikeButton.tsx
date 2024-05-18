@@ -11,7 +11,7 @@ import HeartFilled from '../../assets/icons/heart-filled.svg';
 import HeartOutlined from '../../assets/icons/heart-outlined.svg';
 import {changeLikeStatus} from '../../store/characters/slice.ts';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux.ts';
-import {CharacterType} from '../../store/characters/types';
+import {CharacterType} from '../../store/characters/types.ts';
 import {selectLikedCharacters} from '../../store/characters/selectors.ts';
 
 interface LikeButtonProps extends TouchableOpacityProps {

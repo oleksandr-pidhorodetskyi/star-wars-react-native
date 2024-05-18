@@ -6,7 +6,7 @@ import FansContainer from './FansContainer.tsx';
 import {useAppDispatch, useAppSelector} from '../../../hooks/useRedux.ts';
 import {selectLikedCharacters} from '../../../store/characters/selectors.ts';
 import {clearLikedCharacters} from '../../../store/characters/slice.ts';
-import {FansCardType} from '../../../store/characters/types';
+import {FansCardType} from '../../../store/characters/types.ts';
 import {parseCountGanders} from '../../../utils/parseCountGanders.ts';
 
 const Header = () => {
