@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: horizontalScale(15),
     paddingVertical: verticalScale(15),
-    maxHeight: '80%',
+    maxHeight: '78%',
     borderRadius: moderateScale(10),
   },
   charactersContainer: {},

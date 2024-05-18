@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: '70%',
+    height: '60%',
     borderRadius: moderateScale(10),
     marginBottom: verticalScale(20),
   },
