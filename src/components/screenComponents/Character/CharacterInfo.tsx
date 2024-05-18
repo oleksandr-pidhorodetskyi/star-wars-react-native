@@ -1,7 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {useAppSelector} from '../../../hooks/useRedux.ts';
-import {selectIsLoading} from '../../../store/characters/selectors.ts';
 import {
   horizontalScale,
   moderateScale,
@@ -14,8 +12,6 @@ interface CharacterInfoProps {
   data: CharacterType;
 }
 const CharacterInfo: React.FC<CharacterInfoProps> = ({data}) => {
-  const isLoading = useAppSelector(selectIsLoading);
-
   return (
     <View style={styles.infoContainer}>
       <View style={styles.nameContainer}>
