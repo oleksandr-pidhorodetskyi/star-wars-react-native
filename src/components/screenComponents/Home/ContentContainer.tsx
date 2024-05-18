@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
 import {horizontalScale, verticalScale} from '../../../utils/metrics.ts';
 import Search from '../../basic/Search.tsx';
 import Pagination from '../../basic/Pagination.tsx';
 import {useAppDispatch, useAppSelector} from '../../../hooks/useRedux.ts';
 import {
   selectCharacters,
+  selectIsLoading,
   selectLikedCharacters,
   selectMaxCharacters,
 } from '../../../store/characters/selectors.ts';
@@ -22,6 +23,7 @@ const ContentContainer = () => {
   const characters = useAppSelector(selectCharacters);
   const maxCharacters = useAppSelector(selectMaxCharacters);
   const likedCharacters = useAppSelector(selectLikedCharacters);
+  const isLoading = useAppSelector(selectIsLoading);
 
   const [search, setSearch] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -58,14 +60,18 @@ const ContentContainer = () => {
   return (
     <View style={styles.container}>
       <Search onChangeText={setSearch} value={search} />
-      <FlatList
-        data={characters}
-        style={styles.container}
-        renderItem={({item}) => (
-          <CharactersItem data={item} likedCharacters={likedCharacters} />
-        )}
-        keyExtractor={(item, index) => item.name + index}
-      />
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#8c8c8c" />
+      ) : (
+        <FlatList
+          data={characters}
+          style={styles.container}
+          renderItem={({item}) => (
+            <CharactersItem data={item} likedCharacters={likedCharacters} />
+          )}
+          keyExtractor={(item, index) => item.name + index}
+        />
+      )}
       <Pagination
         startPageItem={startItem}
         endPageItem={endItem}

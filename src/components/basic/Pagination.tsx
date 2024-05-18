@@ -3,6 +3,8 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import ArrowLeft from '../../assets/icons/arrowLeft.svg';
 import ArrowRight from '../../assets/icons/arrowRight.svg';
 import {horizontalScale, verticalScale} from '../../utils/metrics.ts';
+import {useAppSelector} from '../../hooks/useRedux.ts';
+import {selectIsLoading} from '../../store/characters/selectors.ts';
 
 interface PaginationProps {
   startPageItem: number;
@@ -18,8 +20,10 @@ const Pagination: React.FC<PaginationProps> = ({
   onNextPress,
   onPreviousPress,
 }) => {
-  const isDisabledPrevious = startPageItem <= 1;
-  const isDisabledNext = endPageItem === maxItems;
+  const isLoading = useAppSelector(selectIsLoading);
+
+  const isDisabledPrevious = isLoading || startPageItem <= 1;
+  const isDisabledNext = isLoading || endPageItem === maxItems;
 
   return (
     <View style={styles.container}>
