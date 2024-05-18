@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import Home from './src/screens/Home.tsx';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from 'react-native-screens/native-stack';
+import Character from './src/screens/Character.tsx';
 
 function App(): React.JSX.Element {
   const Stack = createNativeStackNavigator();
@@ -15,6 +16,11 @@ function App(): React.JSX.Element {
           <Stack.Screen
             name="Home"
             component={Home}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Character"
+            component={Character}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native';
 import {
@@ -13,43 +12,42 @@ import {
   verticalScale,
 } from '../../../utils/metrics.ts';
 import {CharacterType} from '../../../store/characters/types';
-import HeartFilled from '../../../assets/icons/heart-filled.svg';
-import HeartOutlined from '../../../assets/icons/heart-outlined.svg';
 import {useAppDispatch} from '../../../hooks/useRedux.ts';
-import {changeLikeStatus} from '../../../store/characters/slice.ts';
+import {useNavigation} from '@react-navigation/native';
+import {getId} from '../../../utils/getId.ts';
+import {getOneCharacterThunk} from '../../../store/characters/thunks.ts';
+import LikeButton from '../../basic/LikeButton.tsx';
 
 interface CharactersItemProps {
   data: CharacterType;
-  likedCharacters: CharacterType[];
   customStyles?: StyleProp<ViewStyle>;
 }
 const CharactersItem: React.FC<CharactersItemProps> = ({
   data,
   customStyles = {},
-  likedCharacters,
 }) => {
-  const isLiked = likedCharacters.some(
-    character => character.name === data.name,
-  );
+  const characterId = getId(data.url);
 
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<any>();
 
-  const handleLikePress = () => {
-    dispatch(changeLikeStatus(data));
+  const handleChoseCharacter = () => {
+    dispatch(getOneCharacterThunk({id: characterId}));
+    navigation.navigate('Character');
   };
 
   return (
-    <View style={[styles.container, customStyles]}>
-      <TouchableOpacity onPress={handleLikePress}>
-        {isLiked ? <HeartFilled /> : <HeartOutlined />}
-      </TouchableOpacity>
+    <TouchableOpacity
+      onPress={handleChoseCharacter}
+      style={[styles.container, customStyles]}>
+      <LikeButton data={data} />
       <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
         {data.name}
       </Text>
       <Text style={styles.gender} numberOfLines={1} ellipsizeMode="tail">
         {data.gender}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

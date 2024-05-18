@@ -7,3 +7,5 @@ export const selectLikedCharacters = (state: RootState) =>
 export const selectMaxCharacters = (state: RootState) =>
   state.characters.maxCharacters;
 export const selectIsLoading = (state: RootState) => state.characters.isLoading;
+export const selectChosenCharacter = (state: RootState) =>
+  state.characters.chosenCharacter;

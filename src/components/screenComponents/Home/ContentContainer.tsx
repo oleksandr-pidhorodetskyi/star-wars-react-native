@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
-import {horizontalScale, verticalScale} from '../../../utils/metrics.ts';
+import {FlatList, FlatListProps, StyleSheet, View} from 'react-native';
+import {
+  horizontalScale,
+  moderateScale,
+  verticalScale,
+} from '../../../utils/metrics.ts';
 import Search from '../../basic/Search.tsx';
 import Pagination from '../../basic/Pagination.tsx';
 import {useAppDispatch, useAppSelector} from '../../../hooks/useRedux.ts';
 import {
   selectCharacters,
   selectIsLoading,
-  selectLikedCharacters,
   selectMaxCharacters,
 } from '../../../store/characters/selectors.ts';
 import {CHARACTERS_PER_PAGE} from '../../../constants';
@@ -17,12 +20,15 @@ import {
 } from '../../../store/characters/thunks.ts';
 import CharactersItem from './CharacterItem.tsx';
 import useDebounce from '../../../hooks/useDebounce.ts';
+import withLoader from '../../basic/withLoader.tsx';
+import {CharacterType} from '../../../store/characters/types';
+
+const FlatListWithLoader = withLoader<FlatListProps<CharacterType>>(FlatList);
 
 const ContentContainer = () => {
   const dispatch = useAppDispatch();
   const characters = useAppSelector(selectCharacters);
   const maxCharacters = useAppSelector(selectMaxCharacters);
-  const likedCharacters = useAppSelector(selectLikedCharacters);
   const isLoading = useAppSelector(selectIsLoading);
 
   const [search, setSearch] = useState<string>('');
@@ -60,18 +66,13 @@ const ContentContainer = () => {
   return (
     <View style={styles.container}>
       <Search onChangeText={setSearch} value={search} />
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#8c8c8c" />
-      ) : (
-        <FlatList
-          data={characters}
-          style={styles.container}
-          renderItem={({item}) => (
-            <CharactersItem data={item} likedCharacters={likedCharacters} />
-          )}
-          keyExtractor={(item, index) => item.name + index}
-        />
-      )}
+      <FlatListWithLoader
+        data={characters}
+        style={styles.charactersContainer}
+        renderItem={({item}) => <CharactersItem data={item} />}
+        keyExtractor={(item: CharacterType, index) => item.name + index}
+        loading={isLoading}
+      />
       <Pagination
         startPageItem={startItem}
         endPageItem={endItem}
@@ -88,7 +89,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: horizontalScale(15),
     paddingVertical: verticalScale(15),
+    maxHeight: '80%',
+    borderRadius: moderateScale(10),
   },
+  charactersContainer: {},
 });
 
 export default ContentContainer;

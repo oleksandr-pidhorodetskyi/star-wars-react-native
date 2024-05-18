@@ -49,8 +49,9 @@ const Pagination: React.FC<PaginationProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    justifyContent: 'flex-end',
     columnGap: horizontalScale(10),
-    paddingVertical: verticalScale(2),
+    paddingTop: verticalScale(10),
   },
   pagesText: {
     color: '#000',

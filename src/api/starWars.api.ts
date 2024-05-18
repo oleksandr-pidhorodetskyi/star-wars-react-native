@@ -9,4 +9,10 @@ export const starWarsApi = {
       `/people/?search=${name}&page=${currentPage}`,
     );
   },
+  getOneCharacter: async (id: string) => {
+    return await StarWarsInstance.get(`/people/${id}`);
+  },
+  getCharacterSpec: async (spec: string, id: string) => {
+    return await StarWarsInstance.get(`/${spec}/${id}`);
+  },
 };
